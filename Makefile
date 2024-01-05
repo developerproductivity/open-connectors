@@ -1,5 +1,14 @@
 .DEFAULT_GOAL := default
 
+PROJECT_DIR := $(shell dirname $(abspath $(lastword $(MAKEFILE_LIST))))
+
+
+.PHONY: all
+all: help
+	@:
+
+include make/*.mk
+
 IMAGE ?= quay.io/kmamgain/logilica-integration:latest
 
 export DOCKER_CLI_EXPERIMENTAL=enabled

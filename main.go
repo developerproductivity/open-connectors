@@ -1,42 +1,94 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
-	"net/http"
+	"os"
 
-	gogi "github.com/google/go-github/v57/github"
-	"github.com/gorilla/mux"
-	"github.com/urfave/negroni"
+	"github.com/shurcooL/githubv4"
+	"golang.org/x/oauth2"
 )
 
-func HandleWebhook(w http.ResponseWriter, r *http.Request) {
-	var req gogi.Issue
-	json.NewDecoder(r.Body).Decode(&req)
-	fmt.Println(req)
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(`{"test": "ok}`))
+func CallGithubApi() {
+
+	src := oauth2.StaticTokenSource(
+		&oauth2.Token{AccessToken: os.Getenv("TOKEN")},
+	)
+	httpClient := oauth2.NewClient(context.Background(), src)
+
+	client := githubv4.NewClient(httpClient)
+
+	var q struct {
+		Repository struct {
+			Description string
+			Name        string
+		} `graphql:"repository(owner: \"open-connectors\", name: \"open-connectors\")"`
+	}
+
+	err := client.Query(context.Background(), &q, nil)
+	if err != nil {
+		// Handle error.
+	}
+	fmt.Println(q.Repository.Description)
+	printJSON(q)
+
+	var query struct {
+		Repository struct {
+			Issue struct {
+				ID        githubv4.ID
+				Reactions struct {
+					ViewerHasReacted githubv4.Boolean
+				} `graphql:"reactions(content:$reactionContent)"`
+			} `graphql:"issue(number:$issueNumber)"`
+		} `graphql:"repository(owner:$repositoryOwner,name:$repositoryName)"`
+	}
+	variables := map[string]interface{}{
+		"repositoryOwner": githubv4.String("shurcooL-test"),
+		"repositoryName":  githubv4.String("test-repo"),
+		"issueNumber":     githubv4.Int(2),
+		"reactionContent": githubv4.ReactionContentThumbsUp,
+	}
+	err = client.Query(context.Background(), &q, variables)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println("already reacted:", query.Repository.Issue.Reactions.ViewerHasReacted)
+
+	var listquery struct {
+		Organization struct {
+			Projectv2 struct {
+				Nodes []struct {
+					Id    string
+					Title string
+				}
+			} `graphql:"projectsV2(first: 20)"`
+		} `graphql:"organization(login: $orgname)"`
+	}
+	variables = map[string]interface{}{
+		"orgname": githubv4.String("open-connectors"),
+	}
+	err = client.Query(context.Background(), &listquery, variables)
+	if err != nil {
+		fmt.Println(err)
+	}
+	nodes := listquery.Organization.Projectv2.Nodes
+	for _, node := range nodes {
+		fmt.Println(node.Id)
+		fmt.Println(node.Title)
+	}
 }
 
-func Handler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(`{"test": "ok}`))
+// printJSON prints v as JSON encoded with indent to stdout. It panics on any error.
+func printJSON(v interface{}) {
+	w := json.NewEncoder(os.Stdout)
+	w.SetIndent("", "\t")
+	err := w.Encode(v)
+	if err != nil {
+		panic(err)
+	}
 }
 
-func route() (n *negroni.Negroni, rt *mux.Router) {
-	router := mux.NewRouter()
-
-	router.HandleFunc("/", Handler).Methods("GET")
-	router.HandleFunc("/", HandleWebhook).Methods("POST")
-	n = negroni.New(negroni.NewRecovery(), negroni.NewLogger())
-	return n, router
-}
 func main() {
-
-	n, router := route()
-	n.UseHandler(router)
-	n.Run(":8080")
-
+	CallGithubApi()
 }

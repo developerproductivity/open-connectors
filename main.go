@@ -66,7 +66,7 @@ func CallGithubApi() {
 		} `graphql:"organization(login: $orgname)"`
 	}
 	variables = map[string]interface{}{
-		"orgname": githubv4.String("open-connectors"),
+		"orgname": githubv4.String("containers"),
 	}
 	err = client.Query(context.Background(), &listquery, variables)
 	if err != nil {
@@ -76,6 +76,47 @@ func CallGithubApi() {
 	for _, node := range nodes {
 		fmt.Println(node.Id)
 		fmt.Println(node.Title)
+	}
+
+	type (
+		ProjectV2IterationFieldFragment struct {
+			id            string
+			name          string
+			configuration struct {
+				iterations struct {
+					startDate string
+					id        string
+				}
+			}
+		}
+		ProjectV2SingleSelectFieldFragment struct {
+			id      string
+			name    string
+			options struct {
+				id   string
+				name string
+			}
+		}
+	)
+
+	var projquery struct {
+		Node struct {
+			fields struct {
+				Nodes []struct {
+					Id    string
+					Title string
+				} `graphql:"... on ProjectV2Field "`
+				ProjectV2IterationFieldFragment    `graphql:"... on ProjectV2IterationField "`
+				ProjectV2SingleSelectFieldFragment `graphql:"... on ProjectV2SingleSelectField "`
+			} `graphql:"... on ProjectV2"`
+		} `graphql:"node(id:\"PVT_kwDOAFmk9s4AB47o\")"`
+	}
+	// 	variables = map[string]interface{}{
+	// 	"id": githubv4.String("PVT_kwDOAFmk9s4AB47o"),
+	// }
+	err = client.Query(context.Background(), &projquery, nil)
+	if err != nil {
+		fmt.Println(err)
 	}
 }
 

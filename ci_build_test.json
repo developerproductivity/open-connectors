@@ -1,0 +1,43 @@
+{
+    "origin": "GITHUB_TEST",
+    "originalID": "1691121120",
+    "name": "Pull Request CI",
+    "url": "https://github.com/logilica/example/actions/runs/1691121120",
+    "createdAt": "2022-01-13T04:55:54.000Z",
+    "startedAt": "2022-01-13T04:55:54.000Z",
+    "completedAt": "2022-01-13T05:04:10.000Z",
+    "triggeredBy": "joe-doe",
+    "status": "completed",
+    "conclusion": "success",
+    "repoUrl" : "https://github.com/logilica/example",
+    "commit": "c3de81aedf8461324021d61f4dca16dd742db215",
+    "pullRequestUrls": [],
+    "isDeployment": false,
+    "stages": [
+      {
+        "id" : "4799033011",
+        "name": "build / Build Logilica Insights",
+        "startedAt": "2022-01-13T04:56:04.000Z",
+        "completedAt": "2022-01-13T04:58:43.000Z",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/logilica/example/runs/4799033011?check_suite_focus=true",
+        "jobs": [
+          {
+            "startedAt": "2022-01-13T04:56:04.000Z",
+            "completedAt": "2022-01-13T04:56:17.000Z",
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "startedAt": "2022-01-13T04:56:17.000Z",
+            "completedAt": "2022-01-13T04:56:28.000Z",
+            "name": "Run actions/checkout@v2",
+            "status": "completed",
+            "conclusion": "success"
+          }
+        ]
+      }
+    ]
+  }

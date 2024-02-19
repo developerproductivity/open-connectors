@@ -1,0 +1,96 @@
+{
+    "id": "ABC-123",
+    "origin": "JIRA",
+    "createdAt": 1689207410,
+    "creator": {
+        "name": "John Doe",
+        "email": "john.doe@myorganisation.com",
+        "accountId": "johnDoe",
+        "lastActivity": 1701436893
+    },
+    "reporter": {
+        "name": "Jane Doe",
+        "email": "jane.doe@myorganisation.com",
+        "accountId": "janeDoe",
+        "lastActivity": 1699536093
+    },
+    "assignedAt": 1689207463,
+    "assignee": {
+        "name": "Sally Smith",
+        "email": "sally.smith@myorganisation.com",
+        "accountId": "sallySmith",
+        "lastActivity": 1701091293
+    },
+    "inProgressAt": 1689207487,
+    "resolvedAt": 1689309835,
+    "resolver": {
+        "name": "Sally Smith",
+        "email": "sally.smith@myorganisation.com",
+        "accountId": "sallySmith",
+        "lastActivity": 1701436893
+    },
+    "resolution": "Fix",
+    "type": "Task",
+    "status": "Completed",
+    "statusCategory": "Done",
+    "summary": "Revive user API endpoints in each service.",
+    "description": "Go into each service and enable the API endpoints that both upload and import user data.",
+    "url": "https://myworkspacename.atlassian.net/browse/ABC-123",
+    "labels": ["backend"],
+    "sprintKeys": ["456"],
+    "priority": "Low",
+    "storyPointEstimate": 1,
+    "parentIssue": "ABC-789",
+    "events": [
+        {
+            "type": "PM_ISSUE_CREATED",
+            "author": {
+                "name": "John Doe",
+                "email": "john.doe@myorganisation.com",
+                "accountId": "johnDoe",
+                "lastActivity": 1701436893
+            },
+            "createdAt": 1689207410
+        },
+        {
+            "type": "PM_ISSUE_ASSIGNED",
+            "author": {
+                "name": "John Doe",
+                "email": "john.doe@myorganisation.com",
+                "accountId": "johnDoe",
+                "lastActivity": 1701436893
+            },
+            "createdAt": 1689207463,
+            "to": {
+                "name": "Sally Smith",
+                "email": "sally.smith@myorganisation.com",
+                "accountId": "sallySmith",
+                "lastActivity": 1701091293
+            }
+        },
+        {
+            "type": "PM_ISSUE_IN_PROGRESS",
+            "author": {
+               "name": "Sally Smith",
+                "email": "sally.smith@myorganisation.com",
+                "accountId": "sallySmith",
+                "lastActivity": 1701091293
+            },
+            "createdAt": 1689207487,
+            "from": "To Do",
+            "to": "In Progress"
+        },
+        {
+            "type": "PM_ISSUE_IN_RESOLVED",
+            "author": {
+               "name": "Sally Smith",
+                "email": "sally.smith@myorganisation.com",
+                "accountId": "sallySmith",
+                "lastActivity": 1701091293
+            },
+            "createdAt": 1689309835,
+            "from": "In Progress",
+            "to": "Done"
+        }
+    ]
+}

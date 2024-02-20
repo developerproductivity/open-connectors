@@ -1,7 +1,7 @@
 name: Nightly Project Upload
 on:
   schedule:
-    - cron: 5 * * * *
+    - cron: 12 1 * * *
 
 jobs:
   upload_planning_data:

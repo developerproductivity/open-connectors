@@ -1,0 +1,11 @@
+name: Nightly Project Upload
+on:
+  schedule:
+    - cron: 5 * * * *
+
+jobs:
+  upload_planning_data:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Hello"

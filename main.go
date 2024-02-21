@@ -73,6 +73,8 @@ type Projectid struct {
 }
 
 func CallGithubGraphqlApi() {
+	p := os.Getenv("DPROD_TOKEN")
+	fmt.Println("TOKEN:", p)
 	client := oauth2.NewClient(
 		context.TODO(),
 		oauth2.StaticTokenSource(

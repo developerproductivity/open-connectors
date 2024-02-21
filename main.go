@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"net/http"
 	"net/http/httputil"
@@ -44,11 +45,21 @@ func route() (n *negroni.Negroni, rt *mux.Router) {
 	return n, router
 }
 
+var planningUpload = flag.Bool("planning", false, "upload planning data to Logilica")
+var ciUpload = flag.Bool("ci", false, "upload CI build data to Logilica")
+
 func main() {
-	CallGithubGraphqlApi()
-	n, router := route()
-	n.UseHandler(router)
-	n.Run(":8080")
+	flag.Parse()
+	if *planningUpload {
+		CallGithubGraphqlApi()
+	}
+	if *ciUpload {
+		fmt.Println("Upload CI Build data")
+	}
+
+	//n, router := route()
+	//n.UseHandler(router)
+	//n.Run(":8080")
 }
 
 type graphQLRequest struct {

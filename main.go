@@ -76,7 +76,7 @@ func CallGithubGraphqlApi() {
 	client := oauth2.NewClient(
 		context.TODO(),
 		oauth2.StaticTokenSource(
-			&oauth2.Token{AccessToken: os.Getenv("TOKEN")},
+			&oauth2.Token{AccessToken: os.Getenv("DPROD_TOKEN")},
 		))
 
 	query := `{

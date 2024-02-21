@@ -29,3 +29,7 @@ publish:
 		--output "type=image,push=true" \
 		--tag $(IMAGE) \
 		.
+
+.PHONY: build-go
+build-go:
+	go build .

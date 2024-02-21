@@ -14,9 +14,10 @@ jobs:
           go-version: "^1.21"
       - name: Checkout repo
         uses: actions/checkout@v4
-      - env:
-        DPROD_TOKEN: ${{ secrets.DPROD_TOKEN }}
-      - run: |
+      - shell: bash
+        env:
+          DPROD_TOKEN: ${{ secrets.DPROD_TOKEN }}
+        run: |
           make build-go
           ./open-connectors -h
           ./open-connectors -ci

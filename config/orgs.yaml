@@ -1,0 +1,16 @@
+organizations:
+  - organization: open-connectors
+    url: https://github.com/orgs/open-connectors/projects/1
+    key: github
+  # - orgName: kubesaw
+  #   URL: https://github.com/redhat-developer/odo
+  #   key: github
+  # - orgName: open-connectors
+  #   url: https://github.com/redhat-developer/odo
+  #   key: github
+  # - orgName: codeready-toolchain
+  #   URL: https://github.com/redhat-developer/odo
+  #   key: github
+  # - orgName: containers
+  #   URL: https://github.com/redhat-developer/odo
+  #   key: github

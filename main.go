@@ -27,8 +27,8 @@ var ciUpload = flag.Bool("ci", false, "upload CI build data to Logilica")
 func main() {
 	flag.Parse()
 	if *planningUpload {
-		client := CreateClient()
-		LogilicaUploadPlanningData(client)
+		// client := CreateClient()
+		// LogilicaUploadPlanningData(client)
 		fmt.Println("Upload Planning data")
 	}
 	if *ciUpload {
